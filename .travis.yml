@@ -1,17 +1,16 @@
 language: cpp
 compiler: clang
 cache: ccache
-before_install: set -e
-after_script: set +e
 before_script:
   - cmake --version
   - qmake --version
   - $CXX --version
   - $CC --version
-
 script:
   - mkdir build && cd build
-  - find / -name 'libQt*'
+  - find / -name 'libQt*' || true
+  # qt5.2.1 _qt5_OpenGL_check_file_exists fails without this
+  - ln -s /usr/lib/x86_64-linux-gnu/libQt5OpenGL.so.5.2.1 /usr/lib/x86_64-linux-gnu/libQtOpenGL.so
   - cmake -DCUDA_HOST_COMPILER="$(which gcc)" ..
   - make -j3
 
@@ -39,3 +38,7 @@ addons:
       - zlib1g-dev
       - libglew-dev
       - freeglut3-dev
+
+# Fails fast
+before_install: set -e
+after_script: set +e
