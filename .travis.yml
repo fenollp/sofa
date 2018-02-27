@@ -1,0 +1,39 @@
+language: cpp
+compiler: clang
+cache: ccache
+before_install: set -e
+after_script: set +e
+after_install:
+  - $CC --version
+  - $CXX --version
+  - cmake --version
+  - qmake --version
+
+script:
+  - mkdir build && cd build
+  - cmake -DCUDA_HOST_COMPILER="$(which gcc)" ..
+  - make -j3
+
+addons:
+  apt:
+    packages:
+      # Qt >= 5.5.0
+      - qt5-default
+      # Boost >= 1.54.0
+      - libboost-atomic-dev
+      - libboost-chrono-dev
+      - libboost-date-time-dev
+      - libboost-filesystem-dev
+      - libboost-locale-dev
+      - libboost-regex-dev
+      - libboost-system-dev
+      - libboost-thread-dev
+      # Python 2.7
+      - python2.7-dev
+      - python-numpy
+      - python-scipy
+      # Additional libs
+      - libpng-dev
+      - zlib1g-dev
+      - libglew-dev
+      - freeglut3-dev
