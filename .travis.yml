@@ -12,8 +12,8 @@ before_script:
 script:
   - mkdir build && cd build
   - find / -name 'libQt*' || true
-  # qt5.2.1 _qt5_OpenGL_check_file_exists fails without this
-  - sudo ln -s /usr/lib/x86_64-linux-gnu/libQtOpenGL.so /usr/lib/x86_64-linux-gnu/libQt5OpenGL.so.5.2.1
+  # # qt5.2.1 _qt5_OpenGL_check_file_exists fails without this
+  # - sudo ln -s /usr/lib/x86_64-linux-gnu/libQtOpenGL.so /usr/lib/x86_64-linux-gnu/libQt5OpenGL.so.5.2.1
   - cmake -GNinja -DCUDA_HOST_COMPILER="$(which gcc)" ..
   - ninja
 
@@ -24,6 +24,8 @@ addons:
       - ninja-build
       # Qt >= 5.5.0
       - qt5-default
+      - libqt5opengl5
+      - libqt5opengl5-dev
       # Boost >= 1.54.0
       - libboost-atomic-dev
       - libboost-chrono-dev
