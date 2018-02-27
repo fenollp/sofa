@@ -11,8 +11,9 @@ before_script:
   - $CC --version
 script:
   - mkdir build && cd build
+  - find / -name 'libQt*' || true
   # qt5.2.1 _qt5_OpenGL_check_file_exists fails without this
-  - ln -s /usr/lib/x86_64-linux-gnu/libQtOpenGL.so /usr/lib/x86_64-linux-gnu/libQt5OpenGL.so.5.2.1
+  - sudo ln -s /usr/lib/x86_64-linux-gnu/libQtOpenGL.so /usr/lib/x86_64-linux-gnu/libQt5OpenGL.so.5.2.1
   - cmake -GNinja -DCUDA_HOST_COMPILER="$(which gcc)" ..
   - ninja
 
